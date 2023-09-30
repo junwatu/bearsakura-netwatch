@@ -1,13 +1,14 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const packetCapturer = require('./packetCapturer');
+import 'dotenv/config';
+import express from 'express';
+import bodyParser from 'body-parser';
+import * as packetCapturer from './packetCapturer.js';
 
 const app = express();
 app.use(bodyParser.json());
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-packetCapturer.startCapturing('192.168.0.102'); // Starts capturing
+packetCapturer.startCapturing(process.env.IP_ADDRESS);
 
 app.get('/packets', (req, res) => {
 	res.json(packetCapturer.getPackets());

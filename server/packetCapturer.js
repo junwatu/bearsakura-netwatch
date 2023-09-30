@@ -1,5 +1,6 @@
-const Cap = require('cap').Cap;
-const decoders = require('cap').decoders;
+import pkg from 'cap';
+const { Cap, decoders } = pkg;
+
 const PROTOCOL = decoders.PROTOCOL;
 
 let packets = [];
@@ -63,7 +64,4 @@ function getPackets() {
 	return packets;
 }
 
-module.exports = {
-	startCapturing,
-	getPackets
-};
+export { startCapturing, getPackets };
