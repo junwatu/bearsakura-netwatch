@@ -34,32 +34,24 @@ You can check the Node.js installation in the terminal with running this command
 node --version
 ```
 
+### GridDB
 
-- **Frontend Development with React**
-  - Discuss the project structure, components, and integration with the backend.
-- **Desktop Integration using Tauri**
-  - Detail the process of turning your web app into a desktop application with Tauri.
+GridDB is a highly scalable NoSQL database specifically tailored for time-series data. Rooted in its unique architecture, it offers both in-memory and disk-based storage, ensuring optimized performance and data durability. Its architecture is designed to handle massive volumes of data, making it a preferred choice for IoT, telemetry, and any application where time-based data is crucial. Beyond its core features, GridDB boasts advanced functions like automatic partitioning and robust failover mechanisms, ensuring data consistency and high availability.
 
-## Demonstrating the Results
+If you are using WSL on Windows, go to this [link](https://docs.griddb.net/gettingstarted/wsl/#installing-wsl) for installation.
 
-- Share performance results, user feedback, or any metrics that demonstrate the value of your solution.
-- Visual aids: Use screenshots or GIFs of the application in action to reinforce the benefits.
 
-## Addressing the Challenges
 
-- Describe any obstacles faced during development.
-- Detail how you overcame them, offering insights or best practices derived from your experiences.
+## Frontend Development with Tauri and React
 
-## Conclusion
+### Tauri
 
-- Recap the main points of your post, combining the "why" and the "how".
-- Discuss potential future enhancements or plans related to the project.
+[Tauri](https://tauri.studio/) is a toolkit for building small, secure, and fast applications with web technologies. It's a competitor to [Electron](https://www.electronjs.org/), aiming to provide a leaner and more performant solution for creating desktop applications with web front-ends. The core idea is to enable developers to use familiar web technologies while reducing the bloat and potential security issues associated with bundling a complete Chromium instance, which is what Electron does.
 
-## Call to Action
+Tauri is built in [Rust](https://www.rust-lang.org/), a memory-safe language, and its core is a very lightweight webview rendering engine. This allows for significantly smaller binary sizes and lower resource usage compared to Electron. It also provides a strong security model by minimizing the necessary permissions and isolating the web content from the system.
 
-- Invite readers to try out your project (provide a GitHub link if it's open source).
-- Encourage comments, questions, and feedback.
+The motivation behind Tauri's creation was to address the common criticisms of Electron regarding size, speed, and security, while preserving the ease of development and cross-platform capabilities that web technologies provide.
 
-## References/Further Reading
+### React
 
-- List any sources you cited or further reading materials for those interested in diving deeper into specific technologies.
+[React](https://react.dev/) is a JavaScript library for building user interfaces, maintained by Facebook and a community of individual developers and companies. It was created to facilitate the development of complex, interactive UIs in an efficient and flexible manner. React's [virtual DOM](https://reactjs.org/docs/faq-internals.html) further optimizes rendering and improves app performance. The declarative nature of React simplifies the code, making it easier to debug and manage. The component-based architecture allows developers to build encapsulated components that manage their own state, which can then be composed to make complex UIs. React also empowers developers with the ability to create web applications that can update and render efficiently in response to data changes.
