@@ -2,28 +2,17 @@
 
 ## Introduction
 
-- Hook: Start with a relatable problem or a provocative question.
-- Introduce the main topic: "Building a Desktop WiFi Network Monitor."
-- Briefly mention the technologies involved (Tauri, React, Node.js, and GridDB).
-
-## Why We Need a Custom WiFi Monitor
-
-- **Problem Statement**
-  - Describe the challenges of monitoring WiFi networks.
-  - Explain why existing solutions might not be sufficient.
-
-- **Benefits of a Custom Solution**
-  - Discuss the advantages of building a tailored network monitor.
-  - Highlight the benefits of using Tauri, React, Node.js, and GridDB.
+In this article, we will delve into the process of constructing a Desktop WiFi Network Monitor, intricately weaving together technologies like **Node.js**, **Tauri**, and **React**. Central to our architectural decisions is the emphasis on using **GridDB** for our storage needs. But why GridDB? As we navigate through the intricacies of WiFi network monitoring, the choice of a reliable and efficient storage mechanism becomes paramount. GridDB, with its unique features and optimized performance characteristics, emerges as an ideal candidate. Paired with the versatility of Node.js, the rich user interface capabilities of React, and the cross-platform advantages of Tauri, we aim to present a holistic approach to effective network monitoring.
 
 ## System Architecture
 
 ![base system architecture](images/system-arch.png)
 
+Within the architecture of the Desktop WiFi Network Monitor, **Npcap** stands out as a powerful packet capture module optimized for Windows OS. This utility continuously fetches WiFi network packets, subsequently channeling them to our dedicated **Node.js Server**. Beyond mere data processing, this server integrates seamlessly with **GridDB**, our selected high-performance database. Once data is safely persisted, the server interfaces with an advanced dashboard developed using **Tauri** and **React**. This interface is designed to provide a detailed and actionable visualization of the network metrics directly on the user's desktop.
 
 ## Capture Network Traffic
 
-Capturing network traffic using Node.js typically involves native modules that interface with system-level libraries like `libpcap` (on Unix-like systems) or `WinPcap/Npcap` (on Windows). For this post, we will be using Windows OS.
+Capturing network traffic using Node.js typically involves native modules that interface with system-level libraries like **libpcap** (on Unix-like systems) or **WinPcap/Npcap** (on Windows). For this post, we will be using Windows OS.
 
 ### Install Npcap
 
