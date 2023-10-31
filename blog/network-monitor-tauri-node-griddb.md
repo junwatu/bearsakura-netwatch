@@ -4,6 +4,52 @@
 
 In this article, we will delve into the process of constructing a Desktop WiFi Network Monitor, intricately weaving together technologies like **Node.js**, **Tauri**, and **React**. Central to our architectural decisions is the emphasis on using **GridDB** for our storage needs. But why GridDB? As we navigate through the intricacies of WiFi network monitoring, the choice of a reliable and efficient storage mechanism becomes paramount. GridDB, with its unique features and optimized performance characteristics, emerges as an ideal candidate. Paired with the versatility of Node.js, the rich user interface capabilities of React, and the cross-platform advantages of Tauri, we aim to present a holistic approach to effective network monitoring.
 
+## Soure Code
+
+There are a few steps to setup the project"
+
+### Preparation
+
+This source code tested on Windows 11 and heavily depends on the native packet    capture which is **Npcap** on Windows. First install it, look at this [section](#capture-network-traffic) for more information.
+
+### Clone the Source Code
+
+Clone the source code from this [link](https://github.com/junwatu/bearsakura-netwatch).
+
+```shell
+git clone git@github.com:junwatu/bearsakura-netwatch.git
+```
+Got to the `server` directory and install all the dependencies
+
+```shell
+cd server
+npm install
+```
+
+### Configure `env`
+
+Configure the `.env` file to meet your IP address and change the port if you have to. These are the default values:
+
+```ini
+IP_ADDRESS='192.168.0.102'
+PORT=5000
+```
+
+- `IP_ADDRESS` is your current computer IP where this server is run and where the **Npcap** is installed.
+- `PORT` is where the port of this server listen to.
+
+### Run the server
+
+This command will run the server:
+
+```shell
+npm run dev
+```
+
+### Run the desktop monitor
+
+Download the desktop binary file from [here]() then unzip it and then run the `BearWatch.exe` file.
+
 ## System Architecture
 
 ![base system architecture](images/system-arch.png)
