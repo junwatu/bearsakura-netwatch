@@ -16,6 +16,11 @@
   - Discuss the advantages of building a tailored network monitor.
   - Highlight the benefits of using Tauri, React, Node.js, and GridDB.
 
+## System Architecture
+
+![base system architecture](images/system-arch.png)
+
+
 ## Capture Network Traffic
 
 Capturing network traffic using Node.js typically involves native modules that interface with system-level libraries like `libpcap` (on Unix-like systems) or `WinPcap/Npcap` (on Windows). For this post, we will be using Windows OS.
@@ -24,17 +29,15 @@ Capturing network traffic using Node.js typically involves native modules that i
 
 [Npcap](https://npcap.com/) is a packet capture and sending library for Microsoft Windows. We need to install this software first so that later we can use it with the node.js npm package, such as [`cap`](https://github.com/mscdex/cap), to perform packet capturing.
 
-To download Npcap, please visit [https://npcap.com/#download](https://npcap.com/#download) and choose the appropriate installer type for a hassle-free installation.
+To download Npcap, please visit [their site](https://npcap.com/#download) and choose the appropriate installer type for a hassle-free installation. Upon installation, leave every option at its default.
 
 ![npcap windows installer](images/npcap-windows.png)
 
-Upon installation, leave every option at its default.
-
-## Backend Development with Node.js and GridDB**
+## Backend Development with Node.js and GridDB
 
 ### Node.js
 
-Node.js® is an open-source, cross-platform JavaScript runtime environment. Download the Windows installer from [https://nodejs.org/en/download](https://nodejs.org/en/download). We will use the LTS v18.18.0 version. There many ways to install Node.js in Windows, please look into this [documentation](https://nodejs.dev/en/).
+Node.js® is an open-source, cross-platform JavaScript runtime environment. Download the Windows installer from [here](https://nodejs.org/en/download). We will use the Node.js LTS v18.18.0 version. There many ways to install Node.js in Windows, please look into their [documentation](https://nodejs.dev/en/). We can use 3rd party Windows package installer such as [chocolatey](https://chocolatey.org/) or use the manual installation.
 
 You can check the Node.js installation in the terminal with running this command:
 
