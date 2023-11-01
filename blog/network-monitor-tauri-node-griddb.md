@@ -6,7 +6,7 @@ In this article, we will delve into the process of constructing a Desktop WiFi N
 
 ## Soure Code
 
-There are a few steps to setup the project"
+There are a few steps to setup the project:
 
 ### Preparation
 
@@ -14,7 +14,7 @@ This source code tested on Windows 11 and heavily depends on the native packet  
 
 ### Clone the Source Code
 
-Clone the source code from this [link](https://github.com/junwatu/bearsakura-netwatch).
+Clone the source code from this [GitHub repository](https://github.com/junwatu/bearsakura-netwatch):
 
 ```shell
 git clone git@github.com:junwatu/bearsakura-netwatch.git
@@ -86,7 +86,104 @@ GridDB is a highly scalable NoSQL database specifically tailored for time-series
 
 If you are using WSL on Windows, go to this [link](https://docs.griddb.net/gettingstarted/wsl/#installing-wsl) for installation.
 
+### Packet Capture with Node.js
 
+The code for packet capture is pretty easy. The `startCapturing(ipAddress)` function will start the packet capturing process. It will detect the WiFi interface and start capturing the packets. The `getPackets()` function will return the captured packets.
+
+```js
+import pkg from 'cap';
+const { Cap, decoders } = pkg;
+
+const PROTOCOL = decoders.PROTOCOL;
+
+let packets = [];
+
+function startCapturing(ipAddress) {
+	const c = new Cap();
+	const device = Cap.findDevice(ipAddress);
+	const filter = 'ip';
+	const bufSize = 10 * 1024 * 1024;
+	const buffer = Buffer.alloc(65535);
+
+	const devices = Cap.deviceList()
+	const wifiDevice = devices.find(device => {
+		const description = device.description.toLowerCase();
+		return description.includes('wireless') || description.includes('wi-fi');
+	});
+
+	if (!wifiDevice) {
+		console.error('No Wi-Fi device found!');
+		process.exit(1);
+	}
+
+	const wifiInterfaceName = wifiDevice.name;
+	const linkType = c.open(wifiInterfaceName, filter, bufSize, buffer);
+
+	c.on('packet', function (nbytes, trunc) {
+		const ret = decoders.Ethernet(buffer);
+
+		if (ret.info.type === 2048) {
+			const decodedIP = decoders.IPV4(buffer, ret.offset);
+			const srcaddr = decodedIP.info.srcaddr;
+			const dstaddr = decodedIP.info.dstaddr;
+
+			let packetInfo = {
+				length: nbytes,
+				srcaddr: srcaddr,
+				dstaddr: dstaddr
+			};
+
+			if (decodedIP.info.protocol === PROTOCOL.IP.TCP) {
+				const decodedTCP = decoders.TCP(buffer, decodedIP.offset);
+				packetInfo.protocol = 'TCP';
+				packetInfo.srcport = decodedTCP.info.srcport;
+				packetInfo.dstport = decodedTCP.info.dstport;
+			} else if (decodedIP.info.protocol === PROTOCOL.IP.UDP) {
+				const decodedUDP = decoders.UDP(buffer, decodedIP.offset);
+				packetInfo.protocol = 'UDP';
+				packetInfo.srcport = decodedUDP.info.srcport;
+				packetInfo.dstport = decodedUDP.info.dstport;
+			}
+
+			packets.push(packetInfo);
+
+			// Limit the storage to the last 100 entries (or any other number)
+			if (packets.length > 100) packets.shift();
+		}
+	});
+}
+
+function getPackets() {
+	return packets;
+}
+
+export { startCapturing, getPackets };
+```
+
+The API is hosted on `http://localhost:5000/packets` (the port and host depends on the `.env` configuration settings). The server code is pretty simple. It run on Express.js and use the `startCapturing` module to get the captured packets.
+
+```js
+import 'dotenv/config';
+import express from 'express';
+import bodyParser from 'body-parser';
+import * as packetCapturer from './packetCapturer.js';
+
+const app = express();
+app.use(bodyParser.json());
+
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || 'localhost'; 
+
+packetCapturer.startCapturing(process.env.IP_ADDRESS);
+
+app.get('/packets', (req, res) => {
+	res.json(packetCapturer.getPackets());
+});
+
+app.listen(PORT, () => {
+	console.log(`Server started on http://${HOST}:${PORT}`);
+});
+```
 
 ## Frontend Development with Tauri and React
 
@@ -101,3 +198,5 @@ The motivation behind Tauri's creation was to address the common criticisms of E
 ### React
 
 [React](https://react.dev/) is a JavaScript library for building user interfaces, maintained by Facebook and a community of individual developers and companies. It was created to facilitate the development of complex, interactive UIs in an efficient and flexible manner. React's [virtual DOM](https://reactjs.org/docs/faq-internals.html) further optimizes rendering and improves app performance. The declarative nature of React simplifies the code, making it easier to debug and manage. The component-based architecture allows developers to build encapsulated components that manage their own state, which can then be composed to make complex UIs. React also empowers developers with the ability to create web applications that can update and render efficiently in response to data changes.
+
+
