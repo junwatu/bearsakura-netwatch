@@ -418,3 +418,10 @@ fn main() {
 }
 ```
 
+## Future Enhancements
+
+The desktop  wifi monitor is a proof of concept and there are many things that can be improved. Here are some of the future enhancements:
+
+- Working on different machines
+- Better packet visualization
+- Better setup process and deployment
