@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PacketVisualization from './packet-visualization'
+import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
 
 function App() {
@@ -7,7 +8,9 @@ function App() {
 
   useEffect(() => {
     async function fetchPacketData() {
-      const response = await fetch('http://localhost:4000/get-all-packets')
+      const config = await invoke('read_config');
+      const apiBaseUrl = await invoke('get_api_base_url', { config: config });
+      const response = await fetch(`${apiBaseUrl}/get-all-packets`)
       const data = await response.json()
       console.log(data)
       setPacketData(data)
@@ -22,7 +25,6 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Wi-Fi Packet Monitor</h1>
       {packetData && <PacketVisualization data={packetData} />}
     </div>
   );
