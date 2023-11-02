@@ -3,16 +3,13 @@ import 'dotenv/config';
 import express from 'express';
 import bodyParser from 'body-parser';
 
-
 const app = express();
 app.use(bodyParser.json());
 
-const PORT = process.env.PACKET_PORT || 3000;
-
-packetCapturer.startCapturing(process.env.PACKET_IP_ADDRESS);
+const PORT = process.env.DATABASE_SERVER_PORT || 4000;
 
 app.get('/info', (req, res) => {
-	res.json({ message: 'griddb server' });
+	res.json({ message: 'database server' });
 });
 
 app.listen(PORT, () => {
