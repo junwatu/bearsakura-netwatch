@@ -1,10 +1,12 @@
 // create express app
 import 'dotenv/config';
+import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as griddb from './griddbservice.js'
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 const PORT = process.env.DATABASE_SERVER_PORT || 4000;
@@ -15,8 +17,12 @@ app.get('/info', (req, res) => {
 
 app.post('/save-packets', async (req, res) => {
 	const packets = req.body;
-	console.log(packets);
-	griddb.saveData(packets);
+
+	for (let packet of packets) {
+		const { length, srcaddr, dstaddr, protocol, srcport, dstport } = packet;
+		await griddb.saveData({ length, srcaddr, dstaddr, protocol, srcport, dstport });
+	}
+
 	res.json({ message: 'saved' });
 });
 
