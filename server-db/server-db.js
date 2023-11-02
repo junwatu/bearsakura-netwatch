@@ -10,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const PORT = process.env.DATABASE_SERVER_PORT || 4000;
-const HOST = process.env.DATABASE_SERVER_HOST || 'localhost';
+const HOST = process.env.DATABASE_SERVER || 'localhost';
 
 app.get('/info', (req, res) => {
 	res.json({ message: 'database server' });
