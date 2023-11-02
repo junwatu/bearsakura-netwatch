@@ -54,7 +54,9 @@ Download the desktop binary file from [here]() then unzip it and then run the `B
 
 ![base system architecture](images/system-arch.png)
 
-Within the architecture of the Desktop WiFi Network Monitor, **Npcap** stands out as a powerful packet capture module optimized for Windows OS. This utility continuously fetches WiFi network packets, subsequently channeling them to our dedicated **Node.js Server**. Beyond mere data processing, this server integrates seamlessly with **GridDB**, our selected high-performance database. Once data is safely persisted, the server interfaces with an advanced dashboard developed using **Tauri** and **React**. This interface is designed to provide a detailed and actionable visualization of the network metrics directly on the user's desktop.
+Within the architecture of the Desktop WiFi Network Monitor, **Npcap** stands out as a powerful packet capture module optimized for Windows OS. This utility continuously fetches WiFi network packets, subsequently channeling them to our dedicated **Node.js Server**.
+
+Beyond mere data processing, this server integrates seamlessly with the **Database Server** that connect data to  the **GridDB** database, our selected high-performance database. Once data is safely persisted, the server interfaces with an advanced dashboard developed using **Tauri** and **React** (**Desktop Database Monitor**). This interface is designed to provide a detailed and actionable visualization of the network metrics directly on the user's desktop.
 
 ## Capture Network Traffic
 
@@ -84,7 +86,7 @@ node --version
 
 GridDB is a highly scalable NoSQL database specifically tailored for time-series data. Rooted in its unique architecture, it offers both in-memory and disk-based storage, ensuring optimized performance and data durability. Its architecture is designed to handle massive volumes of data, making it a preferred choice for IoT, telemetry, and any application where time-based data is crucial. Beyond its core features, GridDB boasts advanced functions like automatic partitioning and robust failover mechanisms, ensuring data consistency and high availability.
 
-If you are using WSL on Windows, go to this [link](https://docs.griddb.net/gettingstarted/wsl/#installing-wsl) for installation.
+Go to the [Official GridDB website](https://docs.griddb.net) for installation information.
 
 ### Packet Capture with Node.js
 
@@ -105,7 +107,7 @@ function startCapturing(ipAddress) {
 	const bufSize = 10 * 1024 * 1024;
 	const buffer = Buffer.alloc(65535);
 
-	const devices = Cap.deviceList()
+	const devices = Cap.deviceList();
 	const wifiDevice = devices.find(device => {
 		const description = device.description.toLowerCase();
 		return description.includes('wireless') || description.includes('wi-fi');
@@ -119,7 +121,7 @@ function startCapturing(ipAddress) {
 	const wifiInterfaceName = wifiDevice.name;
 	const linkType = c.open(wifiInterfaceName, filter, bufSize, buffer);
 
-	c.on('packet', function (nbytes, trunc) {
+	c.on('packet', function(nbytes, trunc) {
 		const ret = decoders.Ethernet(buffer);
 
 		if (ret.info.type === 2048) {
@@ -163,6 +165,7 @@ export { startCapturing, getPackets };
 The API is hosted on `http://localhost:5000/packets` (the port and host depends on the `.env` configuration settings). The server code is pretty simple. It run on Express.js and use the `startCapturing` module to get the captured packets.
 
 ```js
+
 import 'dotenv/config';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -177,13 +180,19 @@ const HOST = process.env.HOST || 'localhost';
 packetCapturer.startCapturing(process.env.IP_ADDRESS);
 
 app.get('/packets', (req, res) => {
-	res.json(packetCapturer.getPackets());
+    res.json(packetCapturer.getPackets());
 });
 
 app.listen(PORT, () => {
-	console.log(`Server started on http://${HOST}:${PORT}`);
+    console.log(`Server started on http://${HOST}:${PORT}`);
 });
+
 ```
+
+### Database Server
+
+The database server is a simple Node.js server that will receive the captured packets and store them into the GridDB database. The database server will run on `http://localhost:3000` (the port and host depends on the `.env` configuration settings). 
+
 
 ## Frontend Development with Tauri and React
 
