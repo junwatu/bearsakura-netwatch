@@ -1,6 +1,17 @@
 const griddb = require('griddb-node-api');
 
-const containerName = 'FeedTheAnimalsStorage';
+const containerName = 'PacketStorage';
+
+/**
+packet = {
+		"length": 66,
+		"srcaddr": "20.198.210.174",
+		"dstaddr": "192.168.0.102",
+		"protocol": "TCP",
+		"srcport": 443,
+		"dstport": 1693
+	},
+ */
 
 const initStore = async () => {
 	const factory = griddb.StoreFactory.getInstance();
@@ -26,9 +37,12 @@ function initContainer() {
 		name: containerName,
 		columnInfoList: [
 			['id', griddb.Type.INTEGER],
-			['playerposition', griddb.Type.STRING],
-			['numberofthrows', griddb.Type.STRING],
-			['gameover', griddb.Type.STRING],
+			['length', griddb.Type.INTEGER],
+			['srcaddr', griddb.Type.STRING],
+			['dstaddr', griddb.Type.STRING],
+			['protocol', griddb.Type.STRING],
+			['srcport', griddb.Type.INTEGER],
+			['dstport', griddb.Type.INTEGER],
 		],
 		type: griddb.ContainerType.COLLECTION,
 		rowKey: true,
@@ -154,9 +168,12 @@ async function queryAll(conInfo, store) {
 			const row = rowset.next();
 			const rowData = {
 				id: `${row[0]}`,
-				playerposition: row[1],
-				numberofthrows: row[2],
-				gameover: row[3],
+				length: `${row[1]}`,
+				srcaddr: `${row[2]}`,
+				dstaddr: `${row[3]}`,
+				protocol: `${row[4]}`,
+				srcport: `${row[5]}`,
+				dstport: `${row[6]}`,
 			};
 			results.push(rowData);
 		}
