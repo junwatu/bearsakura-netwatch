@@ -15,6 +15,8 @@ packet = {
 const { collectionDb, store, conInfo, containerName } = await GridDB.initGridDbTS();
 
 export async function saveData({ length, scraddr, dstaddr, protocol, srcport, dstport }) {
+
+	console.log({ length, scraddr, dstaddr, protocol, srcport, dstport });
 	const id = generateRandomID();
 
 	// packet information
