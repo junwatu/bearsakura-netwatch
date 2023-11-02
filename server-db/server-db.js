@@ -10,6 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const PORT = process.env.DATABASE_SERVER_PORT || 4000;
+const HOST = process.env.DATABASE_SERVER_HOST || 'localhost';
 
 app.get('/info', (req, res) => {
 	res.json({ message: 'database server' });
@@ -31,6 +32,6 @@ app.get('/get-all-packets', async (req, res) => {
 	res.json({ packets });
 })
 
-app.listen(PORT, () => {
-	console.log(`Server started on http://localhost:${PORT}`);
+app.listen(PORT, HOST, () => {
+	console.log(`Server started on http://${HOST}:${PORT}`);
 });

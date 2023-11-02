@@ -29,6 +29,6 @@ app.get('/packets', (req, res) => {
 	res.json(packetCapturer.getPackets());
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
 	console.log(`Server started on http://${HOST}:${PORT}`);
 });

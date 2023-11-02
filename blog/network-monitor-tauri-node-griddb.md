@@ -10,16 +10,20 @@ There are a few steps to setup the project:
 
 ### Preparation
 
-This source code tested on Windows 11 and heavily depends on the native packet    capture which is **Npcap** on Windows. First install it, look at this [section](#capture-network-traffic) for more information.
+This source code tested on Windows 11 and heavily depends on the native packet capture which is **Npcap** on Windows. First install it, look at this [section](#capture-network-traffic) for more information.
 
-### Clone the Source Code
+### Clone the Source Code on Windows
 
-Clone the source code from this [GitHub repository](https://github.com/junwatu/bearsakura-netwatch):
+Clone the source code from this [GitHub repository](https://github.com/junwatu/bearsakura-netwatch). There will be two server running on different operating system. The first one is the **Node.js** server that act like a forwader that will run on Windows and the second one is the **Node.js** server that connect to **GridDB** that will run on Linux. The **Node.js Forwarder** will capture the WiFi network traffic and send it to the **Node.js** server on Linux. The **Node.js** server will store the captured packets into the database and also serve the data to the **Tauri** desktop application.
+
+**Node.js Forwarder**
+
+```shell
 
 ```shell
 git clone git@github.com:junwatu/bearsakura-netwatch.git
 ```
-Got to the `server` directory and install all the dependencies
+Go to the `server` directory and install all the dependencies
 
 ```shell
 cd server
@@ -31,14 +35,19 @@ npm install
 Configure the `.env` file to meet your IP address and change the port if you have to. These are the default values:
 
 ```ini
-IP_ADDRESS='192.168.0.102'
-PORT=5000
+# This is the IP address of the server that is running the packet forwarder
+PACKET_IP_ADDRESS='192.168.0.102'
+PACKET_PORT=5000
+
+# This is the IP address of the server that is running the database
+DATABASE_SERVER='172.23.136.180'
+DATABASE_SERVER_PORT=4000
 ```
 
-- `IP_ADDRESS` is your current computer IP where this server is run and where the **Npcap** is installed.
-- `PORT` is where the port of this server listen to.
+- `PACKET_IP_ADDRESS` is your current computer IP where this forwarder is run and where the **Npcap** is installed.
+- `PACKET_PORT` is where the port of this server listen to.
 
-### Run the server
+### Run the forwader
 
 This command will run the server:
 
@@ -46,9 +55,21 @@ This command will run the server:
 npm run dev
 ```
 
-### Run the desktop monitor
+### Build the desktop monitor
 
-Download the desktop binary file from [here]() then unzip it and then run the `BearWatch.exe` file.
+Download the desktop binary file from [here](https://github.com/junwatu/bearsakura-netwatch/releases/download/v0.1.0/BearWatch_0.1.0_x64-setup.exe). Run the installer and go to the installation directory. 
+
+Open the `config.json` file:
+
+```json
+{
+	"api": {
+		"base_url": "http://localhost:4000"
+	}
+}
+```
+Make sure the `base_url` is match with the `.env` configuration `DATABASE_SERVER='172.23.136.180'` and `DATABASE_SERVER_PORT=4000`. For example, if the `.env` configuration is `DATABASE_SERVER='localhost'` and `DATABASE_SERVER_PORT=3000` then the `base_url` should be `http://localhost:3000`.
+
 
 ## System Architecture
 
