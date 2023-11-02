@@ -1,19 +1,33 @@
 import * as GridDB from './libs/griddb.cjs';
 import { generateRandomID } from './libs/rangen.js';
 
+/**
+packet = {
+		"length": 66,
+		"srcaddr": "20.198.210.174",
+		"dstaddr": "192.168.0.102",
+		"protocol": "TCP",
+		"srcport": 443,
+		"dstport": 1693
+	},
+ */
+
 const { collectionDb, store, conInfo, containerName } = await GridDB.initGridDbTS();
 
-export async function saveData({ playerposition, numberofthrows, gameover }) {
+export async function saveData({ length, scraddr, dstaddr, protocol, srcport, dstport }) {
 	const id = generateRandomID();
 
-	// Serialize player position to a JSON string (if needed)
-	const playerpositionStr = JSON.stringify(playerposition);
-	const numberofthrowsStr = String(numberofthrows);
-	const gameoverStr = String(gameover);
+	// packet information
+	const lengthInt = parseInt(length);
+	const scraddrStr = String(scraddr);
+	const dstaddrStr = String(dstaddr);
+	const protocolStr = String(protocol);
+	const srcportInt = parseInt(srcport);
+	const dstportInt = parseInt(dstport);
 
 	// Now you can safely insert them into the database as strings
-	const playerState = [parseInt(id), playerpositionStr, numberofthrowsStr, gameoverStr];
-	const saveStatus = await GridDB.insert(playerState, collectionDb);
+	const packetInfo = [parseInt(id), lengthInt, scraddrStr, dstaddrStr, protocolStr, srcportInt, dstportInt];
+	const saveStatus = await GridDB.insert(packetInfo, collectionDb);
 	return saveStatus;
 }
 
