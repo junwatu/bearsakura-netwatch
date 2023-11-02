@@ -2,8 +2,10 @@
   "name": "server-db",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "server-db.js",
   "scripts": {
+    "dev": "node server-db.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +14,7 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "griddb-node-api": "^0.8.6"
   }
 }
