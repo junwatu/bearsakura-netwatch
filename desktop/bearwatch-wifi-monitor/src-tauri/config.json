@@ -1,5 +1,5 @@
 {
 	"api": {
-		"base_url": "http://localhost:4000"
+		"base_url": "http://172.23.136.180:4000"
 	}
 }

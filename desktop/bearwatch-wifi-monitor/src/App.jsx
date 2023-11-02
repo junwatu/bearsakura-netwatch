@@ -5,15 +5,16 @@ import "./App.css";
 
 function App() {
   const [packetData, setPacketData] = useState(null)
-
+  const [apiBaseUrl, setApiBaseUrl] = useState(null)
   useEffect(() => {
     async function fetchPacketData() {
       const config = await invoke('read_config');
-      const apiBaseUrl = await invoke('get_api_base_url', { config: config });
-      const response = await fetch(`${apiBaseUrl}/get-all-packets`)
+      const apiBaseUrlConfig = await invoke('get_api_base_url', { config: config });
+      const response = await fetch(`${apiBaseUrlConfig}/get-all-packets`)
       const data = await response.json()
-      console.log(data)
+
       setPacketData(data)
+      setApiBaseUrl(apiBaseUrlConfig)
     }
   
     fetchPacketData()  // fetch once initially
@@ -26,6 +27,9 @@ function App() {
   return (
     <div className="container">
       {packetData && <PacketVisualization data={packetData} />}
+      <p className='packet-server'>
+        Packet Server: {apiBaseUrl}
+      </p>
     </div>
   );
 }

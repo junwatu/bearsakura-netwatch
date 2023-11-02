@@ -42,7 +42,7 @@
         "resizable": false,
         "title": "Wi-Fi Packet Monitor",
         "width": 850,
-        "height": 500
+        "height": 600
       }
     ]
   }

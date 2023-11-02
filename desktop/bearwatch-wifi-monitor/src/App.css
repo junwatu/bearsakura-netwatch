@@ -5,3 +5,11 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafb);
 }
+
+/* In App.css */
+.container {
+  position: relative;
+  /* ...other styles */
+}
+
+
