@@ -35,6 +35,8 @@ cd server
 npm install
 ```
 
+To capture packets in this project, we use the `cap` npm package that requires `node-gyp` to build the native module. This native module is the bridge between Node.js and Npcap. When we run `npm install`, it automatically creates the native module. However, the `node-gyp` itself has dependencies, like Python and a C++ compiler, which must be installed on the system to work correctly. Please read the [node-gyp Windows documentation guide](https://www.npmjs.com/package/node-gyp#on-windows).
+
 #### Configure `env`
 
 Configure the `.env` file, change the port if you have to. These are the default values:
