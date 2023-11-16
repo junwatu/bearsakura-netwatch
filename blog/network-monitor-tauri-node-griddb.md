@@ -12,7 +12,7 @@ There are a few steps to set up the project:
 
 ### Preparation
 
-> Before making any installation, note that this project is only tested with one WiFi device on Windows.
+> Before installing, ensure that your Windows system has a WiFi device. Please note that this project has only been tested with one WiFi device.
 
 This source code was tested on Windows 11 and with Ubuntu 20.04 on WSL2 and heavily depends on the native packet capture, which is **Npcap** on Windows. First, install it. Look at this [section](#capture-network-traffic) for more information. 
 
