@@ -16,7 +16,7 @@ This source code was tested on Windows 11 and with Ubuntu 20.04 on WSL2 and heav
 
 > Before installing, ensure that your Windows system has a WiFi device. Please note that this project has only been tested with one WiFi device.
 
-### Install Npcap
+#### Install Npcap
 
 [Npcap](https://npcap.com/) is a packet capture and sending library for Microsoft Windows. We need to install this software first so that later we can use it with the node.js npm package, such as [`cap`](https://github.com/mscdex/cap), to perform packet capturing.
 
@@ -45,7 +45,7 @@ cd server
 npm install
 ```
 
-To capture packets in this project, we use the `cap` npm package that requires `node-gyp` to build the native module. This native module is the bridge between Node.js and Npcap. When we run `npm install`, it automatically creates the native module. To make sure it works, you can install it globally
+To capture packets in this project, we use the `cap` npm package that requires `node-gyp` to build the native module. This native module is the bridge between Node.js and Npcap. When we run `npm install`, it automatically creates the native module. To make sure it works, you can install it globally.
 
 ```shell
 npm install -g node-gyp
@@ -55,7 +55,7 @@ However, the `node-gyp` itself has dependencies, like Python and a C++ compiler,
 
 #### Configure `env`
 
-Configure the `.env` file, change the port if you have to. These are the default values:
+Configure the `.env` file, and change the port if you have to. These are the default values:
 
 ```ini
 PACKET_PORT=5000
@@ -63,7 +63,7 @@ DATABASE_SERVER_PORT=4000
 ```
 
 - `PACKET_PORT` is where the port of Node.js forwarder on Windows listens to. Change this if necessary.
-- `DATABASE_SERVER_PORT=4000` is where the port of the Node.js server on Linux listen to.
+- `DATABASE_SERVER_PORT=4000` is where the port of the Node.js server on Linux listens to.
 
 #### Run the forwarder
 
@@ -130,7 +130,7 @@ Within the architecture of the Desktop WiFi Network Monitor, **Npcap** stands ou
 
 ## Capture Network Traffic
 
-Capturing network traffic using Node.js typically involves native modules that interface with system-level libraries like **libpcap** (on Unix-like systems) or **WinPcap/Npcap** (on Windows). For this post, we will be using Windows OS and Npcap.
+Capturing network traffic using Node.js typically involves native modules that interface with system-level libraries like **libpcap** (on Unix-like systems) or **WinPcap/Npcap** (on Windows). For this post, we will use **Windows OS** and **Npcap**.
 
 ## Backend Development with Node.js and GridDB
 
