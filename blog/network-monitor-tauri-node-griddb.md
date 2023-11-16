@@ -12,9 +12,17 @@ There are a few steps to set up the project:
 
 ### Preparation
 
+This source code was tested on Windows 11 and with Ubuntu 20.04 on WSL2 and heavily depends on the native packet capture, which is **Npcap** on Windows. 
+
 > Before installing, ensure that your Windows system has a WiFi device. Please note that this project has only been tested with one WiFi device.
 
-This source code was tested on Windows 11 and with Ubuntu 20.04 on WSL2 and heavily depends on the native packet capture, which is **Npcap** on Windows. First, install it. Look at this [section](#capture-network-traffic) for more information. 
+### Install Npcap
+
+[Npcap](https://npcap.com/) is a packet capture and sending library for Microsoft Windows. We need to install this software first so that later we can use it with the node.js npm package, such as [`cap`](https://github.com/mscdex/cap), to perform packet capturing.
+
+To download Npcap, please visit [their site](https://npcap.com/#download) and choose the appropriate installer type for a hassle-free installation. Upon installation, leave every option at its default.
+
+![npcap windows installer](images/npcap-windows.png)
 
 ### Clone the Source Code on Windows
 
@@ -122,15 +130,7 @@ Within the architecture of the Desktop WiFi Network Monitor, **Npcap** stands ou
 
 ## Capture Network Traffic
 
-Capturing network traffic using Node.js typically involves native modules that interface with system-level libraries like **libpcap** (on Unix-like systems) or **WinPcap/Npcap** (on Windows). For this post, we will be using Windows OS.
-
-### Install Npcap
-
-[Npcap](https://npcap.com/) is a packet capture and sending library for Microsoft Windows. We need to install this software first so that later we can use it with the node.js npm package, such as [`cap`](https://github.com/mscdex/cap), to perform packet capturing.
-
-To download Npcap, please visit [their site](https://npcap.com/#download) and choose the appropriate installer type for a hassle-free installation. Upon installation, leave every option at its default.
-
-![npcap windows installer](images/npcap-windows.png)
+Capturing network traffic using Node.js typically involves native modules that interface with system-level libraries like **libpcap** (on Unix-like systems) or **WinPcap/Npcap** (on Windows). For this post, we will be using Windows OS and Npcap.
 
 ## Backend Development with Node.js and GridDB
 
